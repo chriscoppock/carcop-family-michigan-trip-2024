@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    </head>
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="vecteezy_timelapse-natural-beautiful-view-of-sea-white-sand-beach-in_20687483.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <h1>Weather</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="schedule.html">Schedule</a></li>
+            <li><a href="meals.html">Meals</a></li>
+            <li><a href="shopping-list.html">Shopping List</a></li>
+            <li><a href="places-to-visit.html">Places to Visit</a></li>
+            <li><a href="weather.html">Weather</a></li>
+            <li><a href="check-out.html">Checkout Procedures</a></li>
+
+            
+        </ul>
+   
+        <div class="weather-widget" id="weather">
+            <h2>Weather in Sawyer, MI</h2>
+            <p>Loading weather data...</p>
+        </div>
+    
+        <script>
+            const apiKey = '9c77f5c1121ff615cec4a23bc250452a'; // Replace 'YOUR_API_KEY' with your actual API key
+            const city = 'Sawyer';
+            const country = 'US';
+    
+            async function fetchWeather() {
+                try {
+                    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=imperial&appid=${apiKey}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    displayWeather(data);
+                } catch (error) {
+                    console.error('Error fetching weather data:', error);
+                    document.getElementById('weather').innerHTML = '<p>Error loading weather data. Please try again later.</p>';
+                }
+            }
+    
+            function displayWeather(data) {
+                const weatherElement = document.getElementById('weather');
+                weatherElement.innerHTML = `
+                    <h2>Weather in ${data.name}, ${data.sys.country}</h2>
+                    <p><strong>${data.weather[0].description}</strong></p>
+                    <p>Temperature: ${data.main.temp}°F</p>
+                    <p>Humidity: ${data.main.humidity}%</p>
+                    <p>Wind: ${data.wind.speed} mph</p>
+                `;
+            }
+    
+            fetchWeather();
+        </script>
+    </body>
+    </html>
+    
