@@ -123,3 +123,11 @@ iframe {
         font-size: 1.2em;
     }
 }
+
+.location {
+    margin-bottom: 20px;
+}
+.location a {
+    color: #1a73e8;
+
+}
